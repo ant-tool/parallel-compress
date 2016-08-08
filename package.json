@@ -1,0 +1,29 @@
+{
+  "name": "parallel-compress",
+  "version": "0.0.2",
+  "description": "compress js parallel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ant-tool/parallel-compress.git"
+  },
+  "keywords": [
+    "js",
+    "uglify"
+  ],
+  "author": "ikobe621@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ant-tool/parallel-compress/issues"
+  },
+  "homepage": "https://github.com/ant-tool/parallel-compress#readme",
+  "dependencies": {
+    "source-map": "^0.5.6",
+    "uglify-js": "^2.7.0",
+    "webpack-sources": "^0.1.2",
+    "worker-farm": "^1.3.1"
+  }
+}
