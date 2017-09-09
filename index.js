@@ -1,10 +1,11 @@
 'use strict';
 
 const workerFarm = require('worker-farm');
-const maxConcurrentWorkers = require('os').cpus().length;
 const SourceMapConsumer = require("source-map").SourceMapConsumer;
 const RawSource = require("webpack-sources").RawSource;
 const SourceMapSource = require("webpack-sources").SourceMapSource;
+const maxConcurrentWorkers = require('os').cpus().length;
+const currentWorker = process.env.COMPRESS_WORKER || maxConcurrentWorkers;
 
 function Compress(options) {
   this.options = options || {};
@@ -13,8 +14,10 @@ function Compress(options) {
 Compress.prototype.apply = function(compiler) {
   const options = this.options;
 
+  console.log(`maxConcurrentWorkers: ${maxConcurrentWorkers}`);
+  console.log(`currentWorker: ${currentWorker}`);
   const worker = workerFarm({
-    maxConcurrentWorkers,
+    maxConcurrentWorkers: currentWorker,
     maxRetries: 0,
   }, require.resolve('./worker.js'));
 
@@ -40,7 +43,11 @@ Compress.prototype.apply = function(compiler) {
         const input = asset.source();
         return new Promise((resolve, reject) => {
           worker(input, file, options, (err, stream) => {
-            if (err) return reject(err);
+            if (err) {
+              console.log('worker exec error: ');
+              console.log(err);
+              return reject(err);
+            }
             compilation.assets[file] = new RawSource(stream);
             resolve();
           });
@@ -57,7 +64,7 @@ Compress.prototype.apply = function(compiler) {
           workerFarm.end(worker);
           console.log(`Compress error`);
           console.error(err);
-          callback();
+          callback(err);
         });
     });
 
