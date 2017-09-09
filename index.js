@@ -5,7 +5,7 @@ const SourceMapConsumer = require("source-map").SourceMapConsumer;
 const RawSource = require("webpack-sources").RawSource;
 const SourceMapSource = require("webpack-sources").SourceMapSource;
 const maxConcurrentWorkers = require('os').cpus().length;
-const currentWorker = process.env.COMPRESS_WORKER || maxConcurrentWorkers;
+const currentWorker = 3 || maxConcurrentWorkers;
 
 function Compress(options) {
   this.options = options || {};
