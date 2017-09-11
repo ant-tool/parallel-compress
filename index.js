@@ -42,8 +42,6 @@ Compress.prototype.apply = function(compiler) {
         return new Promise((resolve, reject) => {
           worker(input, file, options, (err, stream) => {
             if (err) {
-              console.log('worker exec error: ');
-              console.log(err);
               return reject(err);
             }
             compilation.assets[file] = new RawSource(stream);
@@ -62,7 +60,8 @@ Compress.prototype.apply = function(compiler) {
           workerFarm.end(worker);
           console.log(`Compress error`);
           console.error(err);
-          callback(err);
+          compilation.errors.push(err);
+          callback();
         });
     });
 

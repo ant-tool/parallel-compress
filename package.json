@@ -1,6 +1,6 @@
 {
   "name": "parallel-compress",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "compress js parallel",
   "main": "index.js",
   "scripts": {
