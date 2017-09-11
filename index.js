@@ -5,7 +5,6 @@ const SourceMapConsumer = require("source-map").SourceMapConsumer;
 const RawSource = require("webpack-sources").RawSource;
 const SourceMapSource = require("webpack-sources").SourceMapSource;
 const maxConcurrentWorkers = require('os').cpus().length;
-const currentWorker = 3 || maxConcurrentWorkers;
 
 function Compress(options) {
   this.options = options || {};
@@ -15,9 +14,8 @@ Compress.prototype.apply = function(compiler) {
   const options = this.options;
 
   console.log(`maxConcurrentWorkers: ${maxConcurrentWorkers}`);
-  console.log(`currentWorker: ${currentWorker}`);
   const worker = workerFarm({
-    maxConcurrentWorkers: currentWorker,
+    maxConcurrentWorkers,
     maxRetries: 0,
   }, require.resolve('./worker.js'));
 
