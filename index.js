@@ -56,7 +56,7 @@ Compress.prototype.apply = function(compiler) {
       Promise.all(tasks)
         .then(() => {
           workerFarm.end(worker);
-          console.log(`Compress done. Cpu length: ${maxConcurrentWorkers}. Cost ${Date.now() - startTime} ms.`);
+          console.log(`Compress done. Cost ${Date.now() - startTime} ms.`);
           callback();
         })
         .catch(err => {
